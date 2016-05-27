@@ -611,21 +611,30 @@ def Test_method(input):
 
 def Test_All():
 
-    Test_method("( + 1 2 )")
-    Test_method("( - 6 2 )")
-    Test_method("( * 3 9 )")
-    Test_method("( / 14 7 )")
-    Test_method("( > 1 5 )")
-    Test_method("( < 1 5 )")
-    Test_method("( = 1 5 )")
-    Test_method("( = 7 7 )")
+   
+    #Test_method("( define a 1 )")
+    #Test_method("( car ' ( 1 2 3 ) )")
+    #Test_method("( define b ' ( 1 2 3 ) )")
+    #Test_method("( define b ( + 2 3 ) )")
+    #Test_method("( define b ( + 2 6 ) )")
+    #Test_method("( + a 3 )")
+    #Test_method("( car b )")
+    #Test_method("( + b 3 )")
+    #Test_method("( define plus1 ( lambda ( x ) ( + x 1 ) ) )")
+    #Test_method("( plus1 2 )")
+    #Test_method("( ( lambda ( x ) ( + x 1 ) ) 2 )")
 
-    Test_method("( not #T )")
-    Test_method("( not #F )")
-
-    Test_method("( + ( - 1 2 ) ( + 4 2 ) )")
-    Test_method("( cond ( ( null? ' ( 1 2 3 ) ) 1 ) ( ( > 100 10 ) 2 ) ( #T 3 ) )")
-    Test_method("( cond ( ( > 1 2 ) 0 ) ( #T 1 ) )")
-
-    Test_method("( > ( + 3 2 ) 10 )")
+    i = True
+    while(i):
+        try:
+            cal = raw_input("> ")
+            print "...",
+            Test_method(cal)
+            answer = raw_input("계속 하시겠습니까?(y,n) : ")
+            if(answer =="n"):
+                i = False
+                print "goodbye"
+        except:
+            print("잘못된 구문입니다.")
+    
 Test_All()
