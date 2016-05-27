@@ -527,7 +527,7 @@ class CuteInterpreter(object):
         if op_code.type in \
                 [TokenType.CAR, TokenType.CDR, TokenType.CONS, TokenType.ATOM_Q,TokenType.PLUS,
                     TokenType.MINUS, TokenType.TIMES, TokenType.DIV, TokenType.LT,
-                    TokenType.GT,TokenType.EQ, TokenType.NOT, TokenType.COND,
+                    TokenType.GT,TokenType.EQ, TokenType.NOT, TokenType.COND,TokenType.DEFINE,
                                     \
                  TokenType.EQ_Q, TokenType.NULL_Q]:
             return self.run_func(op_code)
