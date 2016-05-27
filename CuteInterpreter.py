@@ -317,7 +317,7 @@ class CuteInterpreter(object):
 
     TRUE_NODE = Node(TokenType.TRUE)
     FALSE_NODE = Node(TokenType.FALSE)
-
+    dic = {}
     def run_arith(self, arith_node):
         pass
 
@@ -481,13 +481,21 @@ class CuteInterpreter(object):
         elif func_node.type is TokenType.NULL_Q:
             if list_is_null(rhs1): return self.TRUE_NODE
             return self.FALSE_NODE
-        elif func_node.type is TokenType.NOT:
-            pass
-        elif func_node.type is TokenType.COND:
-            pass
+            
+        elif func_node.type is TokenType.DEFINE:
+            expr_rhs1 = self.run_expr(rhs1)
+            expr_rhs2 = self.run_expr(rhs2)
+
+            expr_rhs1.next = None
+            self.insertTable(expr_rhs1.value, expr_rhs2)
+            
         else:
             return None
-
+            
+    def insertTable(self, id, value):
+        self.dic[id]= value
+        print self.dic[id]
+        
     def run_expr(self, root_node):
         """
         :type root_node: Node
