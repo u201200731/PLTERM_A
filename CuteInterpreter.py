@@ -364,16 +364,28 @@ class CuteInterpreter(object):
         if func_node.type is TokenType.PLUS:
             expr_rhs1 = self.run_expr(rhs1)
             expr_rhs2 = self.run_expr(rhs2)
+            if self.dic.has_key(expr_rhs1.value) is True:
+                expr_rhs1= self.dic.__getitem__(expr_rhs1.value)
+            if self.dic.has_key(expr_rhs2.value)  is True:
+                expr_rhs2= self.dic.__getitem__(expr_rhs2.value)
             return Node(TokenType.INT, int(expr_rhs1.value) + int(expr_rhs2.value))
 
-        if func_node.type is TokenType.MINUS:
+        elif func_node.type is TokenType.MINUS:
             expr_rhs1 = self.run_expr(rhs1)
             expr_rhs2 = self.run_expr(rhs2)
+            if self.dic.has_key(expr_rhs1.value) is True:
+                expr_rhs1= self.dic.__getitem__(expr_rhs1.value)
+            if self.dic.has_key(expr_rhs2.value)  is True:
+                expr_rhs2= self.dic.__getitem__(expr_rhs2.value)
             return Node(TokenType.INT, int(expr_rhs1.value) - int(expr_rhs2.value))
 
-        if func_node.type is TokenType.TIMES:
+        elif func_node.type is TokenType.TIMES:
             expr_rhs1 = self.run_expr(rhs1)
             expr_rhs2 = self.run_expr(rhs2)
+            if self.dic.has_key(expr_rhs1.value) is True:
+                expr_rhs1= self.dic.__getitem__(expr_rhs1.value)
+            if self.dic.has_key(expr_rhs2.value)  is True:
+                expr_rhs2= self.dic.__getitem__(expr_rhs2.value)
             return Node(TokenType.INT, int(expr_rhs1.value) * int(expr_rhs2.value))
 
         if func_node.type is TokenType.DIV:
@@ -524,6 +536,10 @@ class CuteInterpreter(object):
         op_code = l_node.value
         if op_code is None:
             return l_node
+  
+  
+  ##          
+            
         if op_code.type in \
                 [TokenType.CAR, TokenType.CDR, TokenType.CONS, TokenType.ATOM_Q,TokenType.PLUS,
                     TokenType.MINUS, TokenType.TIMES, TokenType.DIV, TokenType.LT,
