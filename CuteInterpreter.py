@@ -391,11 +391,19 @@ class CuteInterpreter(object):
         if func_node.type is TokenType.DIV:
             expr_rhs1 = self.run_expr(rhs1)
             expr_rhs2 = self.run_expr(rhs2)
+            if self.dic.has_key(expr_rhs1.value) is True:
+                expr_rhs1= self.dic.__getitem__(expr_rhs1.value)
+            if self.dic.has_key(expr_rhs2.value)  is True:
+                expr_rhs2= self.dic.__getitem__(expr_rhs2.value)
             return Node(TokenType.INT, int(expr_rhs1.value) / int(expr_rhs2.value))
 
         if func_node.type is TokenType.LT :
             expr_rhs1 = self.run_expr(rhs1)
             expr_rhs2 = self.run_expr(rhs2)
+            if self.dic.has_key(expr_rhs1.value) is True:
+                expr_rhs1= self.dic.__getitem__(expr_rhs1.value)
+            if self.dic.has_key(expr_rhs2.value)  is True:
+                expr_rhs2= self.dic.__getitem__(expr_rhs2.value)
             if (int(expr_rhs1.value) < int(expr_rhs2.value)):
                 return self.TRUE_NODE
             else: return self.FALSE_NODE
@@ -403,6 +411,10 @@ class CuteInterpreter(object):
         if func_node.type is TokenType.GT:
            expr_rhs1 = self.run_expr(rhs1)
            expr_rhs2 = self.run_expr(rhs2)
+           if self.dic.has_key(expr_rhs1.value) is True:
+                expr_rhs1= self.dic.__getitem__(expr_rhs1.value)
+           if self.dic.has_key(expr_rhs2.value)  is True:
+                expr_rhs2= self.dic.__getitem__(expr_rhs2.value)
            if (int(expr_rhs1.value) > int(expr_rhs2.value)):
                 return self.TRUE_NODE
            else: return self.FALSE_NODE
@@ -410,16 +422,22 @@ class CuteInterpreter(object):
         if func_node.type is TokenType.EQ:
             expr_rhs1 = self.run_expr(rhs1)
             expr_rhs2 = self.run_expr(rhs2)
+            if self.dic.has_key(expr_rhs1.value) is True:
+                expr_rhs1= self.dic.__getitem__(expr_rhs1.value)
+            if self.dic.has_key(expr_rhs2.value)  is True:
+                expr_rhs2= self.dic.__getitem__(expr_rhs2.value)
             if (int(expr_rhs1.value) == int(expr_rhs2.value)):
                 return self.TRUE_NODE
             else: return self.FALSE_NODE
 
         if func_node.type is TokenType.NOT:
             expr_rhs1 = self.run_expr(rhs1)
+            if self.dic.has_key(expr_rhs1.value) is True:
+                expr_rhs1= self.dic.__getitem__(expr_rhs1.value)
             if expr_rhs1.type is TokenType.TRUE:
                 return self.FALSE_NODE
             else: return self.TRUE_NODE
-
+            
         if func_node.type is TokenType.COND:
             while(rhs1!=None):
                 if self.run_expr(rhs1.value).type is TokenType.TRUE:
@@ -428,7 +446,10 @@ class CuteInterpreter(object):
 
 
         if func_node.type is TokenType.CAR:
-            rhs1 = self.run_expr(rhs1)
+           rhs1 = self.run_expr(rhs1)
+
+            if self.dic.has_key(rhs1.value) is True:
+                rhs1= self.dic.__getitem__(rhs1.value)
             if not is_quote_list(rhs1):
                 print ("car error!")
             result = pop_node_from_quote_list(rhs1)
@@ -437,10 +458,12 @@ class CuteInterpreter(object):
             return create_quote_node(result)
 
         elif func_node.type is TokenType.CDR:
-            rhs1 = self.run_expr(rhs1)
+             rhs1 = self.run_expr(rhs1)
+
+            if self.dic.has_key(rhs1.value) is True:
+                rhs1= self.dic.__getitem__(rhs1.value)
             if not is_quote_list(rhs1):
                 print ("car error!")
-
             rhs1_pop= pop_node_from_quote_list(rhs1)
             r = create_quote_node(rhs1_pop.next, list_flag = True)
             return r
@@ -450,6 +473,10 @@ class CuteInterpreter(object):
             expr_rhs1 = self.run_expr(rhs1)
             expr_rhs2 = self.run_expr(rhs2)
 
+            if self.dic.has_key(expr_rhs1.value) is True:
+                expr_rhs1= self.dic.__getitem__(expr_rhs1.value)
+            if self.dic.has_key(expr_rhs2.value)  is True:
+                expr_rhs2= self.dic.__getitem__(expr_rhs2.value)
             expr_rhs1.next =None
             if expr_rhs1.type is not TokenType.LIST: result = expr_rhs1
             else: result =expr_rhs1.value.next
@@ -465,18 +492,26 @@ class CuteInterpreter(object):
 
 
         elif func_node.type is TokenType.ATOM_Q:
-            if list_is_null(rhs1): return self.TRUE_NODE
-            if rhs1.type is not TokenType.LIST: return self.TRUE_NODE
-            if rhs1.type is TokenType.LIST:
-                if rhs1.value.type is TokenType.QUOTE:
-                    if rhs1.value.next is not TokenType.LIST:
-                        return self.TRUE_NODE
-            return self.FALSE_NODE
+            if self.dic.has_key(rhs1.value) is True:
+            rhs1= self.dic.__getitem__(rhs1.value)
+
+            if list_is_null(rhs1): r
+            //if list_is_null(rhs1): return self.TRUE_NODE
+            //if rhs1.type is not TokenType.LIST: return self.TRUE_NODE
+            //if rhs1.type is TokenType.LIST:
+                //if rhs1.value.type is TokenType.QUOTE:
+                    //if rhs1.value.next is not TokenType.LIST:
+                        //return self.TRUE_NODE
+            //return self.FALSE_NODE
 
         elif func_node.type is TokenType.EQ_Q:
-            expr_rhs1 = self.run_expr(rhs1)
+             expr_rhs1 = self.run_expr(rhs1)
             expr_rhs2 = self.run_expr(rhs2)
 
+            if self.dic.has_key(expr_rhs1.value) is True:
+                expr_rhs1= self.dic.__getitem__(expr_rhs1.value)
+            if self.dic.has_key(expr_rhs2.value)  is True:
+                expr_rhs2= self.dic.__getitem__(expr_rhs2.value)
             if expr_rhs1.type is TokenType.INT:
                 if expr_rhs2.type is TokenType.INT:
                     result1 = expr_rhs1.value
@@ -491,6 +526,8 @@ class CuteInterpreter(object):
                         #작성
 
         elif func_node.type is TokenType.NULL_Q:
+            if self.dic.has_key(rhs1.value) is True:
+                rhs1= self.dic.__getitem__(rhs1.value)
             if list_is_null(rhs1): return self.TRUE_NODE
             return self.FALSE_NODE
             
