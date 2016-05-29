@@ -571,12 +571,18 @@ class CuteInterpreter(object):
         :type l_node:Node
         """
         op_code = l_node.value
+
         if op_code is None:
             return l_node
-  
-  
-  ##          
-            
+        if self.dic.has_key(op_code.value) is True:
+            temp = op_code
+            temp = op_code.next
+            op_code = self.dic.__getitem__(op_code.value)
+            while(op_code!=temp):
+                if(op_code.next==None):
+                    op_code.next = temp
+                op_code = op_code.next
+                
         if op_code.type in \
                 [TokenType.CAR, TokenType.CDR, TokenType.CONS, TokenType.ATOM_Q,TokenType.PLUS,
                     TokenType.MINUS, TokenType.TIMES, TokenType.DIV, TokenType.LT,
