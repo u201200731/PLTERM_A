@@ -537,6 +537,21 @@ class CuteInterpreter(object):
 
             expr_rhs1.next = None
             self.insertTable(expr_rhs1.value, expr_rhs2)
+        
+        #item3 lambda
+        elif func_node.type is TokenType.LAMBDA:
+            if False:
+                rhs2 = rhs2.value
+                while(rhs2!= None):
+                    if rhs1.value.value is rhs2.value:
+                        rhs2.value = rhs2.value.value
+                    rhs2 = rhs2.next
+            return func_node
+
+        elif func_node.type is TokenType.LIST:
+            if func_node.value.type is TokenType.LAMBDA:
+                return
+#######################################################
             
         else:
             return None
