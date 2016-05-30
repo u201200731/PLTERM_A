@@ -607,6 +607,11 @@ class CuteInterpreter(object):
             return self.run_func(op_code)
         if op_code.type is TokenType.QUOTE:
             return l_node
+            #item 3포함
+        if op_code.type is TokenType.LIST:
+            if op_code.value.type is TokenType.LAMBDA:
+                return self.run_func(op_code)
+                ######
         else:
             print "application: not a procedure;"
             print "expected a procedure that can be applied to arguments"
