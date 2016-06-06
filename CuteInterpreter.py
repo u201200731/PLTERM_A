@@ -546,20 +546,24 @@ class CuteInterpreter(object):
             self.insertTable(expr_rhs1.value, expr_rhs2)
 
         elif func_node.type is TokenType.LAMBDA:
-
-            if func_node.next.next.next is not None : # 람다에 값을 넣었을 때
-                temp = func_node.next.next.next
+            a = func_node.next.next.next
+            if a is not None : # 람다에 값을 넣었을 때
+                val = a.value
+                inja = func_node.next.value.value
                 func_node.next.next.next= None
+
+                lamb = func_node.next.next.value
+
+                while(lamb.next!=None):
+                    if lamb.next.value is inja:
+                        lamb.next.value = val
+                    #if self.dic.has_key(lamb.next.value) is True:
+                    #    lamb.next.value = self.dic.__getitem__(lamb.next.value)
+                    lamb = lamb.next
                 cal = self.run_expr(func_node.next.next)
-                a = cal
+                return cal
 
-
-                #rhs2 = rhs2.value
-               # while(rhs2!= None):
-                ##    if rhs1.value.value is rhs2.value:
-                 #       rhs2.value = rhs2.value.value
-                 #   rhs2 = rhs2.next
-            if func_node.next.next.next is None : # define 할 때
+            if a is None : # define 할 때
                  return func_node
 
         elif func_node.type is TokenType.LIST:
@@ -721,17 +725,20 @@ def Test_All():
     #Test_method("( ( lambda ( x ) ( + x 1 ) ) 2 )")
     #Test_method("( cond ( a 3 ) ( #T 7 ) )")
 
-    #i = True
-    #while(i):
-    #    cal = raw_input("> ")
-    #    print "...",
-    #    Test_method(cal)
+    i = True
+    while(i):
+        cal = raw_input("> ")
+        print "...",
+        Test_method(cal)
 
 
 
-    Test_method("( define plus1 ( lambda ( x ) ( + x 1 ) ) )")
-    Test_method("( plus1 2 )")
-
+    #Test_method("( define plus1 ( lambda ( x ) ( + x 1 ) ) )")
+    #Test_method("( plus1 2 )")
+    #Test_method("( define plus1 ( lambda ( x ) ( + x 1 ) ) )")
+    ##Test_method("( define plus2 ( lambda ( x ) ( + ( plus1 x ) 1 ) ) )")
+    #Test_method("( plus1 2 )")
+    #Test_method("( plus2 2 )")
        # answer = raw_input("계속 하시겠습니까?(y,n) : ")
        # if(answer =="n"):
        #     i = False
