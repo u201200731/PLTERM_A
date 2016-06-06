@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from string import letters, digits
-
+import copy
 class CuteType:
     INT=1
     ID=4
@@ -317,13 +317,14 @@ class CuteInterpreter(object):
     FALSE_NODE = Node(TokenType.FALSE)
     dic = {}
     lambda_temp =""
+    op_temp=""
     def run_arith(self, arith_node):
         pass
 
     def run_func(self, func_node):
         rhs1 = func_node.next
         rhs2 = rhs1.next if rhs1.next is not None else None
-
+        func_node_temp=""
         def create_quote_node(node, list_flag = False):
             """
             "Quote 노드를 생성한 뒤, node를 next로 하여 반환"
@@ -446,7 +447,7 @@ class CuteInterpreter(object):
                     rhs1.value= self.dic.__getitem__(rhs1.value.value)
                     rhs1.value.next=temp
                 if self.run_expr(rhs1.value).type is TokenType.TRUE:
-                   return rhs1.value.next
+	                return rhs1.value.next
                 rhs1 = rhs1.next
 
 
@@ -545,22 +546,38 @@ class CuteInterpreter(object):
             expr_rhs1.next = None
             self.insertTable(expr_rhs1.value, expr_rhs2)
 
+
         elif func_node.type is TokenType.LAMBDA:
+            #func_node_temp = copy.deepcopy(func_node) #deep copy 개쩔었다
             a = func_node.next.next.next
             if a is not None : # 람다에 값을 넣었을 때
                 val = a.value
                 inja = func_node.next.value.value
                 func_node.next.next.next= None
-
+                lamb_tem = copy.deepcopy(func_node.next.next)
                 lamb = func_node.next.next.value
 
-                while(lamb.next!=None):
+                while(lamb.next!=None): # 인자를 바인딩을 한다.
                     if lamb.next.value is inja:
                         lamb.next.value = val
-                    #if self.dic.has_key(lamb.next.value) is True:
-                    #    lamb.next.value = self.dic.__getitem__(lamb.next.value)
+                    if self.dic.has_key(lamb.next.value) is True:
+                        lamb.next.value = self.dic.__getitem__(lamb.next.value).value
+                    #if self.dic.has_key(lamb.next.value.value) is True:
+                    #    lamb.next.value = self.dic.__getitem__(lamb.next.value).value
                     lamb = lamb.next
-                cal = self.run_expr(func_node.next.next)
+                cal = self.run_expr(func_node.next.next) # 변수 바인딩 한 것을 계산한다.
+
+
+                 #바인딩 한 부분을 제거한다.
+                rhs2 = rhs2.value
+                lamb_tem = lamb_tem.value
+                while(rhs2.next!=None):
+                    if rhs2.next.value is not lamb_tem.next.value:
+                        rhs2.next.value = lamb_tem.next.value
+                    rhs2 = rhs2.next
+                    lamb_tem = lamb_tem.next
+
+
                 return cal
 
             if a is None : # define 할 때
@@ -731,8 +748,10 @@ def Test_All():
         print "...",
         Test_method(cal)
 
-
-
+    #Test_method("( define x 9 )")
+    #Test_method("( define add2 ( lambda ( x ) ( + x 2 ) ) )")
+    #Test_method("( add2 3 )")
+    #Test_method("( add2 x )")
     #Test_method("( define plus1 ( lambda ( x ) ( + x 1 ) ) )")
     #Test_method("( plus1 2 )")
     #Test_method("( define plus1 ( lambda ( x ) ( + x 1 ) ) )")
